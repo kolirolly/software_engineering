@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Assistant - Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="flex justify-between items-center">
+        <div class="flex items-center space-x-2 logo">
+            <span>JOB</span>
+            <button id="menuBtn" class="text-00ffcc md:hidden">☰</button>
+        </div>
+        <ul class="hidden md:flex space-x-6 text-gray-300">
+            <li><a href="landing.html">Home</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="landing.html#uploadModal">Upload</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div id="sidebar" class="sidebar">
+        <ul class="space-y-4">
+            <li><a href="landing.html" class="text-gray-300 hover:text-00ffcc">Home</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-00ffcc">Features</a></li>
+            <li><a href="landing.html#uploadModal" class="text-gray-300 hover:text-00ffcc">Upload</a></li>
+            <li><a href="dashboard.html" class="text-gray-300 hover:text-00ffcc">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <section class="container mx-auto mt-16 p-6 text-center">
+        <h2 class="text-5xl font-bold text-00ffcc">AI-Powered Features</h2>
+        <p class="mt-4 text-lg text-gray-400">Elevate your career with cutting-edge tools.</p>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="card">
+                <div class="w-12 h-12 mx-auto mb-4 text-00ffcc">📝</div>
+                <h3 class="text-xl font-semibold">CV Optimization</h3>
+                <p class="mt-2 text-gray-400">AI-driven resume enhancements for ATS success.</p>
+            </div>
+            <div class="card">
+                <div class="w-12 h-12 mx-auto mb-4 text-00ffcc">🔍</div>
+                <h3 class="text-xl font-semibold">Smart Job Matching</h3>
+                <p class="mt-2 text-gray-400">Real-time job discovery with skill alignment.</p>
+            </div>
+            <div class="card">
+                <div class="w-12 h-12 mx-auto mb-4 text-00ffcc">📋</div>
+                <h3 class="text-xl font-semibold">Skill Development</h3>
+                <p class="mt-2 text-gray-400">Customized plans with interactive learning.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

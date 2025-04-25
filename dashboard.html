@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Assistant - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="flex justify-between items-center">
+        <div class="flex items-center space-x-2 logo">
+            <span>JOB</span>
+            <button id="menuBtn" class="text-00ffcc md:hidden">☰</button>
+        </div>
+        <ul class="hidden md:flex space-x-6 text-gray-300">
+            <li><a href="landing.html">Home</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="landing.html#uploadModal">Upload</a></li>
+            <li><a href="#">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div id="sidebar" class="sidebar">
+        <ul class="space-y-4">
+            <li><a href="landing.html" class="text-gray-300 hover:text-00ffcc">Home</a></li>
+            <li><a href="features.html" class="text-gray-300 hover:text-00ffcc">Features</a></li>
+            <li><a href="landing.html#uploadModal" class="text-gray-300 hover:text-00ffcc">Upload</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-00ffcc">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <section class="container mx-auto mt-16 p-6">
+        <h2 class="text-5xl font-bold text-00ffcc">Your Dashboard</h2>
+        <p class="mt-4 text-lg text-gray-400">Monitor and control your career journey.</p>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="card">
+                <h3 class="text-xl font-semibold">CV Status</h3>
+                <p class="mt-2 text-gray-400">Updated: April 15, 2025</p>
+                <div class="mt-4 flex justify-center">
+                    <div class="progress-circle">
+                        <svg>
+                            <circle cx="40" cy="40" r="35" stroke="#00ffcc" stroke-width="5" fill="none" stroke-dasharray="219.9114857512858" stroke-dashoffset="0"></circle>
+                            <circle cx="40" cy="40" r="35" stroke="#00ccff" stroke-width="5" fill="none" stroke-dasharray="219.9114857512858" stroke-dashoffset="32.97344572538587"></circle>
+                        </svg>
+                        <div class="value text-00ffcc">85%</div>
+                    </div>
+                </div>
+                <button class="mt-4 btn-neon">Edit CV</button>
+            </div>
+            <div class="card">
+                <h3 class="text-xl font-semibold">Job Matches</h3>
+                <ul class="mt-2 text-gray-400">
+                    <li>Software Engineer - $90K - <a href="#" class="text-00ffcc">Apply</a></li>
+                    <li>Data Analyst - $75K - <a href="#" class="text-00ffcc">Apply</a></li>
+                </ul>
+                <button class="mt-4 btn-neon">View All</button>
+            </div>
+            <div class="card">
+                <h3 class="text-xl font-semibold">Skill Plan</h3>
+                <p class="mt-2 text-gray-400">Next: Python Basics</p>
+                <div class="mt-4 flex justify-center">
+                    <div class="progress-circle">
+                        <svg>
+                            <circle cx="40" cy="40" r="35" stroke="#00ffcc" stroke-width="5" fill="none" stroke-dasharray="219.9114857512858" stroke-dashoffset="0"></circle>
+                            <circle cx="40" cy="40" r="35" stroke="#00ccff" stroke-width="5" fill="none" stroke-dasharray="219.9114857512858" stroke-dashoffset="109.9557428756429"></circle>
+                        </svg>
+                        <div class="value text-00ffcc">50%</div>
+                    </div>
+                </div>
+                <button class="mt-4 btn-neon">Start</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

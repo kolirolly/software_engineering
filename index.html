@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Assistant - Login/Signup</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #080710;
+      font-family: 'Poppins', sans-serif;
+    }
+    .background {
+      width: 430px;
+      height: 520px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      top: 50%;
+    }
+    .background .shape {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+      border-radius: 50%;
+    }
+    .shape:first-child {
+      background: linear-gradient(#1845ad, #23a2f6);
+      left: -80px;
+      top: -80px;
+    }
+    .shape:last-child {
+      background: linear-gradient(to right, #ff512f, #f09819);
+      right: -30px;
+      bottom: -80px;
+    }
+    form {
+      width: 400px;
+      height: auto;
+      background-color: rgba(255, 255, 255, 0.13);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+      padding: 40px;
+    }
+    form * {
+      color: #ffffff;
+      outline: none;
+      border: none;
+    }
+    form h3 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.07);
+      margin-top: 8px;
+      border-radius: 4px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 12px;
+      background-color: #ffffff;
+      color: #080710;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .switch-link {
+      margin-top: 15px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .switch-link a {
+      color: #23a2f6;
+      cursor: pointer;
+    }
+    .social {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .social div {
+      background-color: rgba(255, 255, 255, 0.27);
+      color: #eaf0fb;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .social div:hover {
+      background-color: rgba(255, 255, 255, 0.47);
+    }
+    #name-container {
+      display: none;
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+    import { firebaseConfig } from './env.js';
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    window.loginUser = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => window.location.href = "landing.html")
+        .catch((error) => alert("Login failed: " + error.message));
+    };
+
+    window.signupUser = () => {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      if (!name) return alert("Please enter your name.");
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          updateProfile(userCredential.user, { displayName: name })
+            .then(() => window.location.href = "landing.html")
+            .catch((error) => alert("Profile update failed: " + error.message));
+        })
+        .catch((error) => alert("Signup failed: " + error.message));
+    };
+
+    window.googleLogin = () => {
+      signInWithPopup(auth, provider)
+        .then(() => window.location.href = "landing.html")
+        .catch((error) => alert("Google Login failed: " + error.message));
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      // Optional: redirect if user is already logged in
+    });
+
+    window.toggleForm = (type) => {
+      const formTitle = document.getElementById("form-title");
+      const btn = document.getElementById("action-btn");
+      const switchLink = document.getElementById("switch-link");
+      const nameField = document.getElementById("name-container");
+
+      if (type === "signup") {
+        formTitle.textContent = "Sign Up";
+        btn.textContent = "Sign Up";
+        btn.onclick = signupUser;
+        switchLink.innerHTML = `Already have an account? <a onclick="toggleForm('login')">Login</a>`;
+        nameField.style.display = "block";
+      } else {
+        formTitle.textContent = "Login Here";
+        btn.textContent = "Log In";
+        btn.onclick = loginUser;
+        switchLink.innerHTML = `Don't have an account? <a onclick="toggleForm('signup')">Sign Up</a>`;
+        nameField.style.display = "none";
+      }
+    };
+  </script>
+</head>
+<body>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <form onsubmit="event.preventDefault();">
+    <h3 id="form-title">Login Here</h3>
+
+    <div id="name-container">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Your name">
+    </div>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Password" required>
+
+    <button id="action-btn" onclick="loginUser()">Log In</button>
+
+    <div class="switch-link" id="switch-link">
+      Don't have an account? <a onclick="toggleForm('signup')">Sign Up</a>
+    </div>
+
+    <div class="social">
+      <div onclick="googleLogin()"><i class="fab fa-google"></i> Google</div>
+    </div>
+  </form>
+</body>
+</html>
