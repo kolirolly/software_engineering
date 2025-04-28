@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Job Assistant</title>
+  <style>
+    body { background: #f7f9fc; font-family: Arial, sans-serif; margin: 40px; }
+    h1 { color: #333; }
+    form { margin-bottom: 30px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; }
+    th { background-color: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Upload Your Resume 📄</h1>
+
+  <form id="upload-form">
+    <input type="file" id="file" name="file" required><br><br>
+    <input type="text" id="location" name="location" placeholder="Preferred Location (optional)" />
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Extracted Skills</h2>
+  <ul id="skills-list"></ul>
+
+  <h2>Matching Jobs</h2>
+  <table id="jobs-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Location</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    document.getElementById('upload-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('file', document.getElementById('file').files[0]);
+      formData.append('location', document.getElementById('location').value || 'Remote');
+
+      const response = await fetch('http://127.0.0.1:8000/upload/', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await response.json();
+      const skillsList = document.getElementById('skills-list');
+      const jobsTable = document.getElementById('jobs-table').querySelector('tbody');
+
+      // Populate skills
+      skillsList.innerHTML = '';
+      data.skills.forEach(skill => {
+        const li = document.createElement('li');
+        li.textContent = skill;
+        skillsList.appendChild(li);
+      });
+
+      // Populate jobs
+      jobsTable.innerHTML = '';
+      data.jobs.forEach(job => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${job.title}</td>
+          <td>${job.company}</td>
+          <td>${job.location}</td>
+          <td><a href="${job.url}" target="_blank">Apply</a></td>
+        `;
+        jobsTable.appendChild(row);
+      });
+    });
+  </script>
+</body>
+</html>
